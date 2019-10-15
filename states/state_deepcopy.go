@@ -156,6 +156,9 @@ func (obj *ResourceInstanceObjectSrc) DeepCopy() *ResourceInstanceObjectSrc {
 	dependencies := make([]addrs.AbsResource, len(obj.Dependencies))
 	copy(dependencies, obj.Dependencies)
 
+	dependsOn := make([]addrs.Referenceable, len(obj.DependsOn))
+	copy(dependsOn, obj.DependsOn)
+
 	return &ResourceInstanceObjectSrc{
 		Status:        obj.Status,
 		SchemaVersion: obj.SchemaVersion,
@@ -163,6 +166,7 @@ func (obj *ResourceInstanceObjectSrc) DeepCopy() *ResourceInstanceObjectSrc {
 		AttrsFlat:     attrsFlat,
 		AttrsJSON:     attrsJSON,
 		Dependencies:  dependencies,
+		DependsOn:     dependsOn,
 	}
 }
 
