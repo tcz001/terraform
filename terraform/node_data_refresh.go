@@ -169,7 +169,7 @@ func (n *NodeRefreshableDataResourceInstance) EvalTree() EvalNode {
 			&EvalReadData{
 				Addr:              addr.Resource,
 				Config:            n.Config,
-				Dependencies:      n.StateReferences(),
+				Dependencies:      n.Dependencies,
 				Provider:          &provider,
 				ProviderAddr:      n.ResolvedProvider,
 				ProviderSchema:    &providerSchema,

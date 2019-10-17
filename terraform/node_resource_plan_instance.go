@@ -78,8 +78,9 @@ func (n *NodePlannableResourceInstance) evalTreeDataResource(addr addrs.AbsResou
 
 					// Check and see if any of our dependencies have changes.
 					changes := ctx.Changes()
-					for _, d := range n.StateReferences() {
-						ri, ok := d.(addrs.ResourceInstance)
+					// FIXME BROKEN
+					for _, d := range n.References() {
+						ri, ok := d.Subject.(addrs.ResourceInstance)
 						if !ok {
 							continue
 						}
@@ -114,7 +115,7 @@ func (n *NodePlannableResourceInstance) evalTreeDataResource(addr addrs.AbsResou
 			&EvalReadData{
 				Addr:           addr.Resource,
 				Config:         n.Config,
-				Dependencies:   n.StateReferences(),
+				Dependencies:   n.Dependencies,
 				Provider:       &provider,
 				ProviderAddr:   n.ResolvedProvider,
 				ProviderSchema: &providerSchema,

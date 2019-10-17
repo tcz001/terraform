@@ -21,7 +21,7 @@ import (
 type EvalReadData struct {
 	Addr           addrs.ResourceInstance
 	Config         *configs.Resource
-	Dependencies   []addrs.Referenceable
+	Dependencies   []addrs.AbsResource
 	Provider       *providers.Interface
 	ProviderAddr   addrs.AbsProviderConfig
 	ProviderSchema **ProviderSchema
@@ -306,14 +306,14 @@ func (n *EvalReadData) Eval(ctx EvalContext) (interface{}, error) {
 // EvalReadDataApply is an EvalNode implementation that executes a data
 // resource's ReadDataApply method to read data from the data source.
 type EvalReadDataApply struct {
-	Addr            addrs.ResourceInstance
-	Provider        *providers.Interface
-	ProviderAddr    addrs.AbsProviderConfig
-	ProviderSchema  **ProviderSchema
-	Output          **states.ResourceInstanceObject
-	Config          *configs.Resource
-	Change          **plans.ResourceInstanceChange
-	StateReferences []addrs.Referenceable
+	Addr           addrs.ResourceInstance
+	Provider       *providers.Interface
+	ProviderAddr   addrs.AbsProviderConfig
+	ProviderSchema **ProviderSchema
+	Output         **states.ResourceInstanceObject
+	Config         *configs.Resource
+	Change         **plans.ResourceInstanceChange
+	Dependencies   []addrs.AbsResource
 }
 
 func (n *EvalReadDataApply) Eval(ctx EvalContext) (interface{}, error) {
@@ -387,7 +387,7 @@ func (n *EvalReadDataApply) Eval(ctx EvalContext) (interface{}, error) {
 		*n.Output = &states.ResourceInstanceObject{
 			Value:        newVal,
 			Status:       states.ObjectReady,
-			Dependencies: n.StateReferences,
+			Dependencies: n.Dependencies,
 		}
 	}
 
