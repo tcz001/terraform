@@ -22,6 +22,7 @@ type ServeCommand struct {
 
 func (c *ServeCommand) commands(w io.Writer) map[string]cli.CommandFactory {
 	meta := c.Meta
+	meta.oldUi = nil
 	meta.Ui = &cli.ConcurrentUi{
 		Ui: &ColorizeUi{
 			Colorize:   meta.Colorize(),
