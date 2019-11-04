@@ -6,7 +6,7 @@ import (
 
 	"github.com/mitchellh/cli"
 
-	"github.com/hashicorp/terraform-svchost"
+	svchost "github.com/hashicorp/terraform-svchost"
 	"github.com/hashicorp/terraform-svchost/auth"
 	"github.com/hashicorp/terraform-svchost/disco"
 	"github.com/hashicorp/terraform/command"
@@ -90,8 +90,13 @@ func initCommands(config *Config, services *disco.Disco) {
 		"push":         struct{}{},
 		"0.12upgrade":  struct{}{},
 	}
-
 	Commands = map[string]cli.CommandFactory{
+		"serve": func() (cli.Command, error) {
+			return &command.ServeCommand{
+				Meta: meta,
+			}, nil
+		},
+
 		"apply": func() (cli.Command, error) {
 			return &command.ApplyCommand{
 				Meta: meta,
